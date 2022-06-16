@@ -61,7 +61,8 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/headerBarrier"
         tools:text="@tools:sample/lorem/random" />
 
@@ -73,7 +74,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/likes"
         app:layout_constraintTop_toTopOf="@id/likes"
-        tools:text="125" />
+        tools:text="12500" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/likes"
@@ -102,7 +103,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/share_post"
         app:layout_constraintTop_toTopOf="@id/share_post"
-        tools:text="7" />
+        tools:text="7000" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/total_preview"
@@ -112,7 +113,7 @@
             android:layout_marginStart="@dimen/common_spacing"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="50" />
+            tools:text="15000" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/preview"
