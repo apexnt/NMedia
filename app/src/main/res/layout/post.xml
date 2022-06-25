@@ -61,8 +61,8 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/headerBarrier"
         tools:text="@tools:sample/lorem/random" />
 
@@ -105,23 +105,24 @@
         app:layout_constraintTop_toTopOf="@id/share_post"
         tools:text="7000" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/total_preview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:layout_marginStart="@dimen/common_spacing"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="15000" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/total_preview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:singleLine="true"
+        app:layout_constraintTop_toTopOf="@id/preview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="15000" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/preview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/common_spacing"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_preview_24"
-        android:layout_marginEnd="@dimen/common_spacing"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/total_preview" />
 
