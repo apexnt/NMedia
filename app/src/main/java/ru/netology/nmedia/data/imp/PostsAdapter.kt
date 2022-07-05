@@ -11,8 +11,11 @@ import ru.netology.nmedia.databinding.PostBinding
 import ru.netology.nmedia.dto.Counter
 import ru.netology.nmedia.dto.Post
 
+typealias OnPostLikeClicked = (Post) -> Unit
+typealias OnPostShareClicked = (Post) -> Unit
+
 internal class PostsAdapter(
-    private val onLikeClicked: (Post) -> Unit, private val onShareClicked: (Post) -> Unit
+    private val onLikeClicked: OnPostLikeClicked, private val onShareClicked: OnPostShareClicked
 ) : ListAdapter<Post, PostsAdapter.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,15 +32,23 @@ internal class PostsAdapter(
         private val binding: PostBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(post: Post) = with(binding) {
-            authorName.text = post.author
-            content.text = post.content
-            date.text = post.publisher
-            likes.setImageResource(getLikeIconResId(post.likeByMe))
-            likes.setOnClickListener { onLikeClicked(post) }
-            sharePost.setOnClickListener { onShareClicked(post) }
-            totalRepost.text = Counter().counterConversion(post.shareCount)
-            totalLikes.text = Counter().counterConversion(post.likeCount)
+       private lateinit var post: Post
+
+       init {
+           binding.likes.setOnClickListener { onLikeClicked(post) }
+           binding.sharePost.setOnClickListener { onShareClicked(post) }
+       }
+
+        fun bind(post: Post) {
+            this.post = post
+            with(binding) {
+                authorName.text = post.author
+                content.text = post.content
+                date.text = post.publisher
+                likes.setImageResource(getLikeIconResId(post.likeByMe))
+                totalRepost.text = Counter().counterConversion(post.shareCount)
+                totalLikes.text = Counter().counterConversion(post.likeCount)
+            }
         }
 
         @DrawableRes
