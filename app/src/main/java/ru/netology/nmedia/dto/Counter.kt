@@ -3,7 +3,10 @@ package ru.netology.nmedia.dto
 class Counter {
     fun counterConversion(count: Int): String {
         val formatCount = when {
-            count in 1000..9999 -> {
+            count in 1000..1099 -> {
+                String.format("%.0fK", count / 1000.0)
+            }
+            count in 1100..9999 -> {
                 String.format("%.1fK", count / 1000.0)
             }
             count in 10_000..999_999 -> {

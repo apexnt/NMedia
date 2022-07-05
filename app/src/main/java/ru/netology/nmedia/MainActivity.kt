@@ -3,10 +3,8 @@ package ru.netology.nmedia
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.annotation.DrawableRes
+import ru.netology.nmedia.data.imp.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
-import ru.netology.nmedia.dto.Counter
-import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewModel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -18,32 +16,12 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        viewModel.data.observe(this) { post ->
-            binding.render(post)
-        }
-
-        binding.likes.setOnClickListener {
-            viewModel.onLikeClicked()
-        }
-
-        binding.sharePost.setOnClickListener {
-            viewModel.onShareClicked()
+        val adapter = PostsAdapter(viewModel::onLikeClicked, viewModel::onShareClicked)
+        binding.postsRecyclerView.adapter = adapter
+        viewModel.data.observe(this) { posts ->
+            adapter.posts = posts
         }
     }
-
-    private fun ActivityMainBinding.render(post: Post) {
-        authorName.text = post.author
-        content.text = post.content
-        date.text = post.publisher
-        likes.setImageResource(getLikeIconResId(post.likeByMe))
-        totalRepost.text = Counter().counterConversion(post.shareCount)
-        totalLikes.text = Counter().counterConversion(post.likeCount)
-    }
-
-    @DrawableRes
-    private fun getLikeIconResId(liked: Boolean) =
-        if (liked) R.drawable.ic_like_red_24 else R.drawable.ic_like_24
 }
 
 
