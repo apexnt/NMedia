@@ -3,20 +3,17 @@ package ru.netology.nmedia.data.imp
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.PostBinding
 import ru.netology.nmedia.dto.Counter
 import ru.netology.nmedia.dto.Post
-import kotlin.properties.Delegates
 
 internal class PostsAdapter(
     private val onLikeClicked: (Post) -> Unit, private val onShareClicked: (Post) -> Unit
-) : RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
-
-    var posts: List<Post> by Delegates.observable(emptyList()) { _, _, _ ->
-        notifyDataSetChanged()
-    }
+) : ListAdapter<Post, PostsAdapter.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -25,10 +22,8 @@ internal class PostsAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(posts[position])
+        holder.bind(getItem(position))
     }
-
-    override fun getItemCount() = posts.size
 
    inner class ViewHolder(
         private val binding: PostBinding
@@ -48,5 +43,14 @@ internal class PostsAdapter(
         @DrawableRes
         private fun getLikeIconResId(liked: Boolean) =
             if (liked) R.drawable.ic_like_red_24 else R.drawable.ic_like_24
+    }
+
+    private object DiffCallback : DiffUtil.ItemCallback<Post>() {
+
+        override fun areItemsTheSame(oldItem: Post, newItem: Post) =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: Post, newItem: Post) =
+            oldItem == newItem
     }
 }
