@@ -1,7 +1,8 @@
-package ru.netology.nmedia.data.imp
+package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -11,33 +12,50 @@ import ru.netology.nmedia.databinding.PostBinding
 import ru.netology.nmedia.dto.Counter
 import ru.netology.nmedia.dto.Post
 
-typealias OnPostLikeClicked = (Post) -> Unit
-typealias OnPostShareClicked = (Post) -> Unit
-
 internal class PostsAdapter(
-    private val onLikeClicked: OnPostLikeClicked, private val onShareClicked: OnPostShareClicked
+    private val interactionListener: PostInteractionListener
 ) : ListAdapter<Post, PostsAdapter.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = PostBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding, interactionListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-   inner class ViewHolder(
-        private val binding: PostBinding
+    class ViewHolder(
+        private val binding: PostBinding,
+        listener: PostInteractionListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
-       private lateinit var post: Post
+        private lateinit var post: Post
+        private val popupMenu by lazy {
+            PopupMenu(itemView.context, binding.menu).apply {
+                inflate(R.menu.options_post)
+                setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.remove -> {
+                            listener.onDeleteClicked(post)
+                            true
+                        }
+                        R.id.edit -> {
+                            listener.onEditClicked(post)
+                            true
 
-       init {
-           binding.likes.setOnClickListener { onLikeClicked(post) }
-           binding.sharePost.setOnClickListener { onShareClicked(post) }
-       }
+                        }
+                        else -> false
+                    }
+                }
+            }
+        }
+
+        init {
+            binding.likes.setOnClickListener { listener.onLikeClicked(post) }
+            binding.sharePost.setOnClickListener { listener.onShareClicked(post) }
+        }
 
         fun bind(post: Post) {
             this.post = post
@@ -48,6 +66,7 @@ internal class PostsAdapter(
                 likes.setImageResource(getLikeIconResId(post.likeByMe))
                 totalRepost.text = Counter().counterConversion(post.shareCount)
                 totalLikes.text = Counter().counterConversion(post.likeCount)
+                menu.setOnClickListener {popupMenu.show()}
             }
         }
 
