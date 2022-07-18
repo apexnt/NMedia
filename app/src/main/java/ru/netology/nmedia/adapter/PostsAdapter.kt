@@ -63,10 +63,9 @@ internal class PostsAdapter(
                 authorName.text = post.author
                 content.text = post.content
                 date.text = post.publisher
-//                likes.setButtonDrawable(getLikeIconResId(post.likeByMe))
                 likes.text = Counter().counterConversion(post.likeCount)
                 likes.isChecked = post.likeByMe
-                totalRepost.text = Counter().counterConversion(post.shareCount)
+                sharePost.text = Counter().counterConversion(post.shareCount)
             }
         }
     }
