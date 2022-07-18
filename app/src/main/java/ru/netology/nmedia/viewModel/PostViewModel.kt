@@ -47,6 +47,5 @@ class PostViewModel : ViewModel(), PostInteractionListener {
         currentPost.value = post
     }
 
-
     // endregion PostInteractionListener
 }

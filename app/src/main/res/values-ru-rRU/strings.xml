@@ -9,5 +9,8 @@
     <string name="save_content">Сохранить измениния</string>
     <string name="canсel_edit">Отмена изменений</string>
     <string name="string_edit">Редактирование</string>
+    <string name="like_button">Кнопка нравится</string>
+    <string name="share_post">Поделится</string>
+    <string name="option_menu">Меню опций</string>
 
 </resources>

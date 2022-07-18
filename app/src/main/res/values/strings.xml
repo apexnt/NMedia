@@ -5,7 +5,10 @@
     <string name="remove">Remove</string>
     <string name="post_text">Post Text</string>
     <string name="menu_edit">Edit</string>
-    <string name="save_content">save changes</string>
-    <string name="canсel_edit">cancel edit</string>
+    <string name="save_content">Save Changes</string>
+    <string name="canсel_edit">Cancel Edit</string>
     <string name="string_edit">Editing</string>
+    <string name="like_button">Like_Button</string>
+    <string name="share_post">Share</string>
+    <string name="option_menu">Option Menu</string>
 </resources>
