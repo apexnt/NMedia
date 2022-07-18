@@ -6,12 +6,15 @@ import ru.netology.nmedia.adapter.PostInteractionListener
 import ru.netology.nmedia.data.PostRepository
 import ru.netology.nmedia.data.imp.PostRepositoryInMemoryImpl
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.util.SingleLiveEvent
 
 class PostViewModel : ViewModel(), PostInteractionListener {
 
     private val repository: PostRepository = PostRepositoryInMemoryImpl()
 
     val data by repository::data
+
+    val sharePostContent = SingleLiveEvent<String>()
 
     val currentPost = MutableLiveData<Post?>(null)
 
