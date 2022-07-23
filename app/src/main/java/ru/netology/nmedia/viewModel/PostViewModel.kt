@@ -16,6 +16,10 @@ class PostViewModel : ViewModel(), PostInteractionListener {
 
     val sharePostContent = SingleLiveEvent<String>()
 
+    val navigateToPostContentEvent = SingleLiveEvent<String>()
+
+    val playVideo = SingleLiveEvent<String>()
+
     val currentPost = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(content: String) {
@@ -32,6 +36,10 @@ class PostViewModel : ViewModel(), PostInteractionListener {
         currentPost.value = null
     }
 
+    fun onAddClicked() {
+        navigateToPostContentEvent.call()
+    }
+
     fun onCancelEditButtonClicked() {
         currentPost.value?.let {
             currentPost.value = currentPost.value
@@ -42,12 +50,23 @@ class PostViewModel : ViewModel(), PostInteractionListener {
 
     override fun onLikeClicked(post: Post) = repository.like(post.id)
 
-    override fun onShareClicked(post: Post) = repository.share(post.id)
-
     override fun onDeleteClicked(post: Post) = repository.deleteById(post.id)
+
+    override fun onShareClicked(post: Post) {
+        sharePostContent.value = post.content
+        repository.share(post.id)
+    }
 
     override fun onEditClicked(post: Post) {
         currentPost.value = post
+        navigateToPostContentEvent.value = post.content
+    }
+
+    override fun onPlayVideoClicked(post: Post) {
+        val url: String = requireNotNull(post.video) {
+            "Url must not be null"
+        }
+        playVideo.value = url
     }
 
     // endregion PostInteractionListener
