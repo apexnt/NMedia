@@ -27,8 +27,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
                         "перемен → http://netolo.gy/fyb\"",
                 publisher = "02.07.2022",
                 likeCount = 1099,
-                shareCount = 1099,
-                likeByMe = false
+                shareCount = 0,
+                likeByMe = false ,
+                video = "https://www.youtube.com/watch?v=acRKY2BNusc"
             )
         }
     )

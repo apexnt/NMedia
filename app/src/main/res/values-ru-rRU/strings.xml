@@ -6,9 +6,9 @@
     <string name="remove">Удалить</string>
     <string name="post_text">Текст Поста</string>
     <string name="menu_edit">Изменить</string>
-    <string name="save_content">Сохранить измениния</string>
+    <string name="save_content">Создать пост</string>
     <string name="canсel_edit">Отмена изменений</string>
-    <string name="string_edit">Редактирование</string>
+    <string name="editing_mode">Режим редактирования</string>
     <string name="like_button">Кнопка нравится</string>
     <string name="share_post">Поделится</string>
     <string name="option_menu">Меню опций</string>
