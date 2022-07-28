@@ -20,7 +20,7 @@ class PostViewModel(
 
     val sharePostContent = SingleLiveEvent<String>()
 
-    val navigateToPostContentEvent = SingleLiveEvent<String>()
+    val navigateToPostContentScreenEvent = SingleLiveEvent<String>()
 
     val playVideo = SingleLiveEvent<String>()
 
@@ -41,7 +41,7 @@ class PostViewModel(
     }
 
     fun onAddClicked() {
-        navigateToPostContentEvent.call()
+        navigateToPostContentScreenEvent.call()
     }
 
 //    fun onCancelEditButtonClicked() {
@@ -63,7 +63,7 @@ class PostViewModel(
 
     override fun onEditClicked(post: Post) {
         currentPost.value = post
-        navigateToPostContentEvent.value = post.content
+        navigateToPostContentScreenEvent.value = post.content
     }
 
     override fun onPlayVideoClicked(post: Post) {
