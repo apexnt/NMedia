@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostsAdapter
@@ -15,7 +15,8 @@ import ru.netology.nmedia.databinding.FeedFragmentBinding
 import ru.netology.nmedia.viewModel.PostViewModel
 
 class FeedFragment : Fragment() {
-    private val viewModel by viewModels<PostViewModel>()
+
+    private val viewModel: PostViewModel by activityViewModels()
 
     private val Fragment.packageManager
         get() = activity?.packageManager
@@ -34,7 +35,6 @@ class FeedFragment : Fragment() {
                 intent, getString(R.string.share_post)
             )
             startActivity(shareIntent)
-
         }
 
         viewModel.playVideo.observe(this) { videoUrl ->
@@ -55,10 +55,17 @@ class FeedFragment : Fragment() {
         }
 
         viewModel.navigateToPostContentScreenEvent.observe(this) { initialContent ->
-            val direction = FeedFragmentDirections.toPostContentFragment(initialContent)
-            findNavController().navigate(
-                direction
+            val direction = FeedFragmentDirections.toPostContentFragment(
+                initialContent,
+                PostContentFragment.REQUEST_FEED_KEY
             )
+            findNavController().navigate(direction)
+        }
+
+        viewModel.navigateToCurrentPostScreenEvent.observe(this) { currentPost ->
+            val direction =
+                FeedFragmentDirections.toCurrentPostFragment(currentPost?.id ?: return@observe)
+            findNavController().navigate(direction)
         }
     }
 
@@ -80,6 +87,5 @@ class FeedFragment : Fragment() {
         }
     }.root
 }
-
 
 
