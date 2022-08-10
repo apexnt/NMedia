@@ -137,10 +137,10 @@ class CurrentPostFragment : Fragment() {
     private fun CurrentPostFragmentBinding.render(post: Post) {
         authorName.text = post.author
         content.text = post.content
-        date.text = post.publisher
+        date.text = post.published
         content.movementMethod = ScrollingMovementMethod()
-        likes.text = Counter().counterConversion(post.likeCount)
-        likes.isChecked = post.likeByMe
+        likes.text = Counter().counterConversion(post.likes)
+        likes.isChecked = post.likedByMe
         sharePost.text = Counter().counterConversion(post.shareCount)
         videoGroup.isVisible = post.video != null
     }

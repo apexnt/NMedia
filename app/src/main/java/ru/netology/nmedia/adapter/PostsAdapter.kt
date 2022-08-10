@@ -67,9 +67,9 @@ internal class PostsAdapter(
             with(binding) {
                 authorName.text = post.author
                 content.text = post.content
-                date.text = post.publisher
-                likes.text = Counter().counterConversion(post.likeCount)
-                likes.isChecked = post.likeByMe
+                date.text = post.published
+                likes.text = Counter().counterConversion(post.likes)
+                likes.isChecked = post.likedByMe
                 sharePost.text = Counter().counterConversion(post.shareCount)
                 videoGroup.isVisible = post.video != null
             }
